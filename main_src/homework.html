@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>GridPanel HomeWork</title>
+
+    <link rel="stylesheet" type="text/css" href="../resources/css/ext-all.css" />
+    <script type="text/javascript" src="../adapter/ext/ext-base.js"></script>
+    <script type="text/javascript" src="../ext-all.js"></script>
+    <script type="text/javascript" src="PagingMemoryProxy.js"></script>
+    <script type="text/javascript" src="homework.js"></script>
+    
+
+    <style type="text/css">
+        .super {
+            background-color: #FBF8BF !important;
+        }
+
+        .manager {
+            background-color: #defdf0 !important;
+        }
+    </style>
+    <script>
+        Ext.onReady(function () {
+            let grid = new Ext.grid.EditorGridPanel({
+                id: 'grid',
+                autoHeight: true,
+                enableDragDrop: true,
+                store: store,
+                cm: cm,
+                sm: sm,
+                view: viewConfig,
+                bbar: bottomBar,
+                tbar: toolBar
+            });
+            grid.on("rowcontextmenu", function (grid, rowIndex, e) {
+                e.preventDefault();
+                grid.getSelectionModel().selectRow(rowIndex);
+                contextmenu.showAt(e.getXY());
+            })
+
+            var window = new Ext.Window({
+                id: 'main',
+                title: '学生管理系统',
+                y: 50,
+                width: 1000,
+                autoHeight: true,
+                items: [grid],
+            })
+            store.load({ params: { start: 0, limit: 3 } });
+            window.show()
+        })
+    </script>
+</head>
+
+<body>
+</body>
+
+</html>
